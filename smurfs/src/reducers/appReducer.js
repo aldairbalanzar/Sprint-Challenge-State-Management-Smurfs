@@ -1,4 +1,4 @@
-import { FETCH_DATA, FETCH_DATA_SUCCESS, SET_ERROR, POST_DATA } from '../actions/appActions';
+import { FETCH_DATA, FETCH_DATA_SUCCESS, SET_ERROR, POST_DATA, POST_DATA_SUCCESS } from '../actions/appActions';
 
 const initialState = {
     dataList: [],
@@ -14,22 +14,28 @@ export const appReducer = (state = initialState, action) => {
                 isFetching: true,
                 dataList: []
             };
-            case FETCH_DATA_SUCCESS: 
-                return {
+        case FETCH_DATA_SUCCESS: 
+            return {
+            ...state,
+            dataList: [...state.dataList, ...action.payload],
+            isFetching: false
+        };
+        case POST_DATA:
+            return {
                 ...state,
-                dataList: [...state.dataList, ...action.payload],
-                isFetching: false
+                datalist: [...state.dataList, action.payload]
+            }
+        case POST_DATA_SUCCESS: 
+            return {
+                ...state,
+                dataList: action.payload
             };
-            case POST_DATA:
-                return {
-                    datalist: [...state.dataList, action.payload]
-                }
-            case SET_ERROR: 
-                return {
-                    ...state,
-                    isFetching: false,
-                    error: `Error: ${action.payload}`
-                }
+        case SET_ERROR: 
+            return {
+                ...state,
+                isFetching: false,
+                error: `Error: ${action.payload}`
+            }
         default:
             return state
     }

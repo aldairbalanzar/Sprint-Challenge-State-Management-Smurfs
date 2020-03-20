@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from 'react-redux';
 import { loadData, postData } from '../actions/appActions';
 import "./App.css";
 
-
 const App = props => {
+
+ const [smurf, setSmurf] = useState({
+      name: '',
+      age: '',
+      height: '' 
+  })
 
   const handleLoad = e => {
     e.preventDefault();
     props.loadData();
   }
 
-  const handleSubmit = e => {
+  const handleChanges = e => {
     e.preventDefault();
-    props.postData({
+    setSmurf({
+      ...smurf,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    props.postData(smurf);
   }
 
   console.log('line 14: ', props.dataList);
@@ -32,7 +43,7 @@ const App = props => {
            type="text"
            id="name"
            name="name"
-           
+           onChange={handleChanges}
            placeholder="name"
           />
         </label>
@@ -42,7 +53,7 @@ const App = props => {
            type="text"
            id="age"
            name="age"
-           
+           onChange={handleChanges}
            placeholder="age"
           />
         </label>
@@ -52,7 +63,7 @@ const App = props => {
            type="text"
            id="height"
            name="height"
-           
+           onChange={handleChanges}
            placeholder="height"
           />
         </label>

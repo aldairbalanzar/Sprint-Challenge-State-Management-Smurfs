@@ -3,6 +3,7 @@ import axios from 'axios';
 export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 export const POST_DATA = 'POST_DATA';
+export const POST_DATA_SUCCESS = 'POST_DATA_SUCCESS';
 export const SET_ERROR = 'SET_ERROR';
 
 export const loadData = () => dispatch => {
@@ -19,6 +20,6 @@ export const postData = (data) => dispatch => {
     axios.post(`http://localhost:3333/smurfs`, data)
     .then(res => {
         console.log('post success: ', res);
-        dispatch({ type: FETCH_DATA, payload: res })
+        dispatch({ type: POST_DATA_SUCCESS, payload: res.data })
     })
 }
